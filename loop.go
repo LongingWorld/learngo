@@ -1,24 +1,24 @@
 package main
 
 import (
-	"fmt"
-	"strconv"
-	"os"
 	"bufio"
+	"fmt"
+	"os"
+	"strconv"
 )
 
-func convertToBin(n int) string{
+func convertToBin(n int) string {
 	a := 2
 	s := ""
 	var c = 0
-	for ;n > 0;n /= 2  {
+	for ; n > 0; n /= 2 {
 		c = n % a
-		s = strconv.Itoa(c) +s
+		s = strconv.Itoa(c) + s
 	}
-	return  s
+	return s
 }
 
-func printfile(filename string)  {
+func printfile(filename string) {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic(err)
@@ -26,12 +26,12 @@ func printfile(filename string)  {
 
 	scanner := bufio.NewScanner(file)
 
-	for scanner.Scan()  {
+	for scanner.Scan() {
 		fmt.Println(scanner.Text())
 	}
 }
 
-func deadLoop()  {
+func deadLoop() {
 	for {
 		fmt.Println("HJY")
 	}

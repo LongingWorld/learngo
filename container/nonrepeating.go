@@ -4,24 +4,24 @@ import (
 	"fmt"
 )
 
-func lengthOfNonRepeatingSubStr(s string) (int,string)  {
+func lengthOfNonRepeatingSubStr(s string) (int, string) {
 	lastOccurred := make(map[rune]int)
-	start := 0  //the first
+	start := 0 //the first
 	finastart := 0
 	maxlength := 0
-	sliceS :=[]rune(s)
+	sliceS := []rune(s)
 
-	for i,ch := range sliceS {  //travering sliceS,get one character of the input parameter
+	for i, ch := range sliceS { //travering sliceS,get one character of the input parameter
 		//fmt.Printf("the %d character of sliceS is %c\n",i,ch)
-		if lastI,ok := lastOccurred[ch];ok && lastI >= start {
-			start = lastI+1
+		if lastI, ok := lastOccurred[ch]; ok && lastI >= start {
+			start = lastI + 1
 			//fmt.Printf("the value of the %c " +
 			//	"in the lastOccurred is %d\n",ch,lastI)
 		}
 
-		if i-start+1 > maxlength{
-			maxlength = i - start +1
-			finastart = i -maxlength+1
+		if i-start+1 > maxlength {
+			maxlength = i - start + 1
+			finastart = i - maxlength + 1
 		}
 		lastOccurred[ch] = i
 
@@ -29,11 +29,11 @@ func lengthOfNonRepeatingSubStr(s string) (int,string)  {
 	//fmt.Printf("start :%d ,maxlength : %d \n",start,maxlength)
 	//fmt.Printf("finastart :%d ,maxlength : %d \n",finastart,maxlength)
 	//fmt.Println(sliceS)
-	sliceS = sliceS[finastart:finastart+maxlength]
+	sliceS = sliceS[finastart : finastart+maxlength]
 
 	fmt.Println(lastOccurred)
 
-	return maxlength,string(sliceS)
+	return maxlength, string(sliceS)
 }
 
 func main() {

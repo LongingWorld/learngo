@@ -1,62 +1,34 @@
-package main
+package tree
 
 import "fmt"
 
-type treeNode struct {
-	value int
-	left,right *treeNode
+type Node struct {
+	Value       int
+	Left, Right *Node
 }
 
-func createNode(value int) *treeNode{  //返回局部变量依然可以使用，直到返回的指针不再使用，垃圾回收机制将其释放
-	return &treeNode{value:value}
+func Create(value int) *Node { //返回局部变量依然可以使用，直到返回的指针不再使用，垃圾回收机制将其释放
+	return &Node{Value: value}
 }
 
-func (node *treeNode) setValue(value int) {
+func (node *Node) SetValue(value int) {
 	if node == nil {
 		return
 	}
-	node.value = value
+	node.Value = value
 }
 
-func (node treeNode) print()  {
-	fmt.Printf("%d ",node.value)
+func (node Node) Print() {
+	fmt.Printf("%d ", node.Value)
 }
 
-func (node *treeNode) traverseNode()  {
-	if node ==nil {
+func (node *Node) TraverseNode() {
+	if node == nil {
 		return
 	}
-	node.left.traverseNode()
-	node.print()
-	node.right.traverseNode()
+	node.Left.TraverseNode()
+	node.Print()
+	node.Right.TraverseNode()
 }
 
-func main() {
-	var root treeNode
 
-	root = treeNode{value:3}//root = treeNode{value:3,nil}
-	//root.value=5
-	root.left = &treeNode{}//root.left.value=3
-	root.right = &treeNode{6,nil,nil}//root.right.value=6
-	root.right.left=new(treeNode)
-
-	root.left.right = createNode(2)
-
-	fmt.Println(root)
-	root.print()
-	root.setValue(666)
-	fmt.Println(root)
-	root.print()
-
-	/*nodes := []treeNode{
-		{value:8},
-		{value:18},
-		{9,nil,&root},
-	}
-
-	fmt.Println(nodes)*/
-
-	root.traverseNode()
-
-
-}

@@ -1,11 +1,11 @@
 package main
 
 import (
-	"io/ioutil"
 	"fmt"
+	"io/ioutil"
 )
 
-func grade(score int) string  {
+func grade(score int) string {
 	g := ""
 	switch {
 	case score < 0 || score > 100:
@@ -18,7 +18,7 @@ func grade(score int) string  {
 		g = "C"
 	case score >= 80 && score < 90:
 		g = "B"
-	case score >=90 && score <= 100:
+	case score >= 90 && score <= 100:
 		g = "A"
 	}
 	return g
@@ -32,10 +32,10 @@ func main() {
 	}else {
 		fmt.Printf("%s\n",contents)
 	}*/
-	if contents,err := ioutil.ReadFile(filename); err != nil {
+	if contents, err := ioutil.ReadFile(filename); err != nil {
 		fmt.Println(err)
-	}else {
-		fmt.Printf("The contents of the file is %s\n",contents)
+	} else {
+		fmt.Printf("The contents of the file is %s\n", contents)
 	}
 
 	/*fmt.Println(grade(59))
