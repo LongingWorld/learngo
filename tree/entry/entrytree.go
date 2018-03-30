@@ -1,8 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"GitHub/learngo/tree"
+
+"GitHub/learngo/tree"
+"fmt"
 )
 
 func main() {
