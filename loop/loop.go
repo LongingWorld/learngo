@@ -1,10 +1,12 @@
-package loop
+package main
 
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func convertToBin(n int) string {
@@ -24,7 +26,11 @@ func printfile(filename string) {
 		panic(err)
 	}
 
-	scanner := bufio.NewScanner(file)
+	PrintFileContents(file)
+}
+
+func PrintFileContents(reader io.Reader)  {
+	scanner := bufio.NewScanner(reader)
 
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
@@ -39,6 +45,13 @@ func deadLoop() {
 
 func main() {
 	fmt.Println(convertToBin(13))
-	printfile("C:\\Users\\HJY\\Desktop\\abc\\abc121.txt")
+	printfile("abc.txt")
+
+	s := `heng
+	jin
+	yu
+	123
+	love`
+	PrintFileContents(strings.NewReader(s))
 	//forever()
 }

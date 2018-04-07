@@ -23,12 +23,24 @@ func (node Node) Print() {
 }
 
 func (node *Node) TraverseNode() {
-	if node == nil {
+	/*if node == nil {
 		return
 	}
 	node.Left.TraverseNode()
 	node.Print()
-	node.Right.TraverseNode()
+	node.Right.TraverseNode()*/
+	node.TraverseFunc(func(nd *Node) {
+		nd.Print()
+	})
+	fmt.Println()
+
 }
 
-
+func (node *Node) TraverseFunc (f func(*Node)) {
+	if node == nil {
+		return
+	}
+	node.Left.TraverseFunc(f)
+	f(node)
+	node.Right.TraverseFunc(f)
+}
