@@ -43,7 +43,7 @@ func lengthOfNonRepeatingSubStr(s string) (int, string) {
 var lastOccurred = make([]int,0xffff)  //存放不同字符出现的最后位置
 
 func LengthoOfNoneRepeatSubStr(s string) int  {
-	//lastOccurred := make([]int,0xffff)   //65535 内存大小
+	//lastOccurred := make([]int,0xffff)   //65535 内存大小   空间换时间
 	for i := range lastOccurred  {
 		lastOccurred[i] = -1
 	}
