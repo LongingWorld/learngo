@@ -1,9 +1,8 @@
 package main
 
 import (
-
-"GitHub/learngo/tree"
-"fmt"
+	"GitHub/learngo/tree"
+	"fmt"
 )
 
 func main() {
@@ -37,5 +36,15 @@ func main() {
 	root.TraverseFunc(func(node *tree.Node) {
 		nodeCount++
 	})
-	fmt.Println("nodeCount:",nodeCount)
+	fmt.Println("nodeCount:", nodeCount)
+
+	maxnode := 0
+	c := root.TraverseFuncChannel()
+	for node := range c {
+		if node.Value >= maxnode {
+			maxnode = node.Value
+		}
+	}
+	fmt.Println("The max node value:", maxnode)
+
 }

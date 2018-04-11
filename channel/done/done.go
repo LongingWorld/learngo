@@ -1,33 +1,47 @@
-package done
+package main
 
 import (
 	"fmt"
-	"time"
+	"sync"
 )
 
-func Worker(id int, c chan int) {
+func DoWorker(id int, c chan int, wg *sync.WaitGroup) {
 	for {
-		if n, ok := <-c; !ok {
+		if n, ok := <-c; !ok { //从worker.in goroutine中取消息
 			break
 		} else {
-			fmt.Printf("OneWorker %d received %d\n", id, n)
+			fmt.Printf("OneWorker %d received %c\n", id, n)
+			wg.Done()
+			//done <- true //往worker.done goroutine中发消息
+			//go func() { //start a goroutine in DoWoiker goroutine
+			//	worker.done <- true
+			//}()
 		}
 	}
 }
 
-func CreateWorker(id int) chan<- int {
-	c := make(chan int)
+func CreateWorker(id int, wg *sync.WaitGroup) Worker {
+	w := Worker{
+		in: make(chan int),
+		wg: wg,
+	}
 
-	go Worker(id, c)
-	return c
+	go DoWorker(id, w.in, wg) //start a goroutine
+	return w
+}
+
+type Worker struct {
+	in chan int
+	wg *sync.WaitGroup
 }
 
 func ChanDemo() {
 	//var c chan int  //c == nil
-	var channels [10]chan<- int //array channel
+	var wg sync.WaitGroup
+	var workers [10]Worker
 
 	for i := 0; i < 10; i++ {
-		channels[i] = CreateWorker(i)
+		workers[i] = CreateWorker(i, &wg)
 	}
 
 	/*go func() {  //closure
@@ -36,15 +50,34 @@ func ChanDemo() {
 			fmt.Println(n)
 		}
 	}()*/
-	for i := 0; i < 10; i++ {
-		channels[i] <- 'a' + i
+
+	//wg.Add(20)
+
+	for i, worker := range workers {
+		wg.Add(1)
+		worker.in <- 'a' + i //往worker.in goroutine中发消息
+		//<-worker.done  get message
 	}
 
-	for i := 0; i < 10; i++ {
-		channels[i] <- 'A' + i
-	}
+	//for _, wk := range workers {
+	//	<-wk.done
+	//}
 
-	time.Sleep(time.Microsecond)
+	for i, worker := range workers {
+		wg.Add(1)
+		worker.in <- 'A' + i
+		//<-worker.done get message
+	}
+	wg.Wait() //wait until all job done
+	//for _, wk := range workers {
+	//	<-wk.done
+	//}
+	//for _, wk := range workers {
+	//	<-wk.done
+	//	<-wk.done
+	//}
+
+	//time.Sleep(time.Microsecond)
 
 }
 
